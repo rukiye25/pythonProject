@@ -1,0 +1,25 @@
+küme={"mert","rukiye","rukiye","ayşe",1,2,3,4,5,6}
+print(küme)
+kume=set([1,2,3,4,5,6,7,8])
+print(kume)
+#add fonkisiyonu kümeye eleman ekler
+kume.add(11)
+print(kume)
+#discarf fonksiyonu ile kümeden eleman çıkartabiliriz
+kume.discard(1)
+print(kume)
+#differnce fonksiyonu iki kümede ortak olmayan elemanları alıyor
+print(küme.difference(kume))
+#difference_update fonksiyonu iki kümede ortak olamyan kümeleri almaz ve o kümenin yeni değeri yapar
+print(küme.difference_update(kume))
+print(küme)
+#intersection fonksiyonu iki kümenin ortak elemanlarını alır
+a={1,2,3,4,5}
+b={4,5,6,7,8}
+print(a.intersection(b))
+#isdisjoint fonksiyonu iki kümenin ortak elemanı olup olmadığını kontrol eder eğer varsa False yoksa True döndürür
+print(a.isdisjoint(b))
+#issubdet fonksiyonu a kümesi b kümesinin alt kümesimi bunu kontrol eder
+print(a.issubset(b))
+#union fonksiyonu iki kümenin birleşimini almamızı sağlar
+print(a.union(b))
