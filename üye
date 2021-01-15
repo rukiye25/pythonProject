@@ -1,0 +1,157 @@
+#kayıt ol fonksiyonunda kullanicilar listwsini açmıyor ona bak
+
+
+
+
+
+
+
+
+
+
+import random
+import json
+class Üyegirisi:
+    def __init__(self):
+        self.durum=True
+        self.veriler=self.verilerial()
+    def calistir(self):
+        self.menü()
+    def menü(self):
+        print("""
+1-GİRİŞ
+2-KAYIT OL
+3-ŞİFREMİ UNTTUM
+4-ÇIKIŞ""")
+
+        try:
+            secim =int(input("\nseçiminiz"))
+            if secim==1:
+              self.giris()
+            elif secim==2:
+              self.kayitol()
+            elif secim==3:
+              self.sifredegistir()
+            elif secim==4:
+                self.cikis()
+            elif secim>4 or secim<=0:
+                print("lütfen 1-4 arası bir seçim yapınız")
+        except ValueError:
+            print("lütfen 1-4 arasında bir seçim yapınız")
+    def giris(self):
+        kadi=input("kullanici aidinizi giriniz\n")
+        sifre=input("şifrenizi giriniz\n")
+        devam=self.kontrolet(kadi,sifre)
+        if devam==True:
+            print("giriş başarılı")
+        else:
+            print("giriş başarısız")
+    def kayitol(self):
+        self.veriler=self.verilerial()
+        self.kayitdetme()
+
+    def cikis(self):
+        pass
+    def verilerial(self):
+        try:
+            with open("kullanicilar.json","r") as dosya:
+                veriler=json.load(dosya)
+                return veriler
+        except FileNotFoundError:
+            with open("kullanicilar.json","w") as dosya:
+                dosya.write("{}")
+
+            with open("kullanicilar.json","r") as dosya:
+                veriler=json.load(dosya)
+                return veriler
+    def aktivasyon(self):
+        sayac=1
+        aktiv = []
+        sayilar=["1","2","3","4","5","6","7","8","9","0"]
+        while sayac<=6:
+            i=random.choice(sayilar)
+            aktiv.append(i)
+            sayac+=1
+        with open("aktivasyonkodu.txt","w") as dosya:
+            dosya.write("".join(aktiv))
+        return aktiv
+
+        pass
+    def kontrolet(self,kadi,sifre):
+        self.veriler=self.verilerial()
+        for kullanici in self.veriler["kullanicilar"]:
+            if kullanici["kadi"]==kadi:
+                if kullanici["sifre"]==sifre:
+                    return True
+            else:
+                return False
+
+    def sifredegistir(self):
+        self.veriler=self.verilerial()
+        kadi=input("kullanici adinizi giriniz")
+        email=input("emailinizi giriniz")
+        for i in self.veriler["kullanicilar"]:
+            if kadi==i["kadi"] and email==i["email"]:
+                with open("sifre.txt".format(email),"w") as dosya:
+                    dosya.write(i["sifre"])
+                    print("şifreniz sifre kutucuğunu kontrol ediniz")
+
+        pass
+    def kayitdetme(self):
+        self.veriler=self.verilerial()
+        kadi=input("kullanici adinizi giriniz")
+        email=input("emailiniz giriniz")
+        if self.veriler=={}:
+            while True:
+                sifre = input("şifrenizi giriniz\n")
+                tsifre = input("şifrenizi tekara giriniz\n")
+                if sifre == tsifre:
+                    self.aktivasyon()
+                    akti=self.aktivasyon()
+                    aktivasyon=input("aktivasyon kodunu giriniz\n")
+                    if "".join(akti)==aktivasyon:
+                       self.veriler=self.verilerial()
+                       self.veriler["kullanicilar"]=[]
+                       self.veriler["kullanicilar"].append({"kadi":kadi,"sifre":sifre,"email":email})
+                       with open("kullanicilar.json","w") as dosya:
+                          json.dump(self.veriler,dosya)
+                          print("kayıt başarılı")
+                          break
+                else:
+                    print("şifreniz doğrulanamdı lütfen tekrar deneyiniz")
+                    pass
+
+        else:
+            self.kayitvarmi(kadi,email)
+            if self.kontrolet(kadi,email)==0:
+                while True:
+                    sifre = input("şifrenizi giriniz\n")
+                    tsifre = input("şifrenizi tekara giriniz\n")
+                    if sifre == tsifre:
+                        akti=self.aktivasyon()
+                        aktivasyon = input("aktivasyon kodunu giriniz\n")
+                        if "".join(akti) == aktivasyon:
+                            self.veriler=self.verilerial()
+                            self.veriler["kullanicilar"].append({"kadi": kadi, "sifre": sifre, "email": email})
+                            with open("kullanicilar.json", "w") as dosya:
+                                json.dump(self.veriler, dosya)
+                                print("kayıt başarılı")
+                                break
+                    else:
+                        print("şifreniz doğrulanamdı lütfen tekrar deneyiniz")
+                        pass
+            else:
+                print("bu kullanici adi bu email tarafından kullanılmakta")
+
+
+    def kayitvarmi(self,kadi1,email1):
+        self.veriler=self.verilerial()
+        for i in self.veriler["kullanicilar"]:
+            if kadi1==i["kadi"] and email1==i["email"]:
+                return 1
+            else:
+                return 0
+
+üyegiris=Üyegirisi()
+while üyegiris.durum:
+    üyegiris.calistir()
