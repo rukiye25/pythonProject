@@ -1,0 +1,16 @@
+yazi="rukiyenazyazgan,yazılımda bir ilk,"
+#upper ve lower fonksiyonu sadece fonksiyon çalıştıgında harfleri büyük yapar yani stringin anasını değiştirmez
+print(yazi.upper())
+print(yazi.lower())
+#replace karakteri değiştirmemeize yarar üç parametre alır birincsi hangi karakterin değişeceği ,
+# ikincisi ne ile değişeceği üçüncüsü ise kaç tensinde değiştireceği
+print(yazi.replace("a","r",3))
+#startwith stringin istediğimiz karakterle başlayıp başlamadığım-nı kontrol eder ve
+# endwith stringin istediğimiz karakterle bitip bitmediğini kontrol eder
+print(yazi.startswith(("ruk","mer","em")))
+print(yazi.endswith(","))
+#split fonksaiyonu stringi parametresine girdiğimize göre ayırır ve list objesi olarak ayırır
+# eğer parametre girmezsek boşluğa göre parçalar
+print(yazi.split())
+#strip fonksiyonu istenmeyen karakteri parametresine girerek o strinkte o karakreti silmiş oluyoruz
+print(yazi.strip("a"))
